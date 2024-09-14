@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour
 {
     private Player player;
     private UIManager ui;
-    int a = 0;
     private void Start()
     {
         player = FindObjectOfType<Player>();
@@ -18,13 +17,12 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        a = a + 1;
         ShowData();
     }
 
     public void ShowData()
     {
-        ui.SetData("Velocity : " + a);
+        ui.SetData("Velocity : " );
     }
 
 }
