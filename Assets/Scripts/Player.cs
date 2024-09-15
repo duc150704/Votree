@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Vector2 moveDirection;
+    [SerializeField] private Vector2 moveDirection;
     [SerializeField] float moveSpeed;
     public Rigidbody2D rb2d;
+    public Animator anim;
+
+
+
+    public float boostSpeed = 10.0f;
+    public float BoostTime = 0.2f;
+    public bool isBoosting = false;
+    private float boostTime;
 
 
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        //anim = GetComponent<Animator>();
     }
 
     // goi moi KHUNG HINH
@@ -31,17 +40,80 @@ public class Player : MonoBehaviour
 
     private void PlayerInput()
     {
+        if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+        {
+            anim.SetFloat("isWalking",0);
+        }
+
+        // di chuyen
+        Vector2 idelBoostDirection = moveDirection;
         moveDirection = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
+        {
             moveDirection.x = -1;
+            idelBoostDirection = moveDirection;
+            transform.localScale = new Vector3(-0.1f, 0.1f, 0.1f); // xoay trai nhan vat
+            anim.SetFloat("isWalking", 1);
+        }
         if (Input.GetKey(KeyCode.D))
+        {
             moveDirection.x = 1;
+            idelBoostDirection = moveDirection;
+            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f); // xoay phai nhan vat
+            anim.SetFloat("isWalking", 1);
+        }
         if (Input.GetKey(KeyCode.W))
+        {
             moveDirection.y = 1;
+            anim.SetFloat("isWalking", 1);
+        }
+           
         if (Input.GetKey(KeyCode.S))
+        {
             moveDirection.y = -1;
+            anim.SetFloat("isWalking", 1);
+        }
 
         moveDirection = moveDirection.normalized;
+
+        
+
+        // tan cong
+        if (Input.GetKey(KeyCode.J))
+        {
+            anim.SetBool("isHitting", true);
+        }
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            anim.SetBool("isHitting", false);
+        }
+
+
+        // boost
+        if (Input.GetKeyDown(KeyCode.K) && boostTime <= 0) 
+        {
+            moveSpeed += boostSpeed;
+            isBoosting = true;
+            boostTime = BoostTime;
+            anim.SetBool("isBoosting", isBoosting);
+        }
+
+        if (isBoosting && moveDirection == Vector2.zero)
+        {
+            rb2d.MovePosition(rb2d.position + idelBoostDirection * moveSpeed * Time.fixedDeltaTime);
+        }
+
+        if (boostTime <= 0 && isBoosting)
+        {
+            moveSpeed -= boostSpeed;
+            isBoosting = false;
+            anim.SetBool("isBoosting", isBoosting);
+
+        } else
+        {
+            boostTime -= Time.deltaTime;
+        }
+        
     }
 
     private void Move()
