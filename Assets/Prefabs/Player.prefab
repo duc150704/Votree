@@ -184,9 +184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5523d9cd5eae48e43ad4a699b57a996a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDirection: {x: 0, y: 0}
   moveSpeed: 8
   rb2d: {fileID: 0}
   anim: {fileID: 3487231837689087295}
+  shootingPoint: {fileID: 0}
+  bullet: {fileID: 0}
+  jumpForce: 100
   boostSpeed: 10
   BoostTime: 0.2
   isBoosting: 0

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb2d;
     public Animator anim;
 
+    public Transform shootingPoint;
+    public Bullet bullet;
 
 
     public float boostSpeed = 10.0f;
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
         moveDirection = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
         {
+            bullet.isFacingRight = false;
             moveDirection.x = -1;
             idelBoostDirection = moveDirection;
             transform.localScale = new Vector3(-0.1f, 0.1f, 0.1f); // xoay trai nhan vat
@@ -57,6 +60,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
+            bullet.isFacingRight = true;
             moveDirection.x = 1;
             idelBoostDirection = moveDirection;
             transform.localScale = new Vector3(0.1f, 0.1f, 0.1f); // xoay phai nhan vat
@@ -85,6 +89,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.J))
         {
+            PlayFire();
             anim.SetBool("isHitting", false);
         }
 
@@ -119,5 +124,13 @@ public class Player : MonoBehaviour
     private void Move()
     {
         rb2d.MovePosition(rb2d.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void PlayFire()
+    {
+        int z = 0;
+        z = (bullet.isFacingRight) ? -90 : 90;
+        Bullet bulletClone = Instantiate(bullet,shootingPoint.position,Quaternion.Euler(0,0,z));
+        Destroy(bulletClone.gameObject, 5);
     }
 }
