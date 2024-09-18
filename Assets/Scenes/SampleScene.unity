@@ -754,6 +754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3b75cd7cd42ec49819a9e89f7f10a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enermy: {fileID: 4972818945052249474, guid: 699ddbe89356ecf4a8dc8fbea87d0a7a, type: 3}
+  SpawnTime: 2
 --- !u!4 &1780034669
 Transform:
   m_ObjectHideFlags: 0

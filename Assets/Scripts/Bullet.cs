@@ -29,4 +29,12 @@ public class Bullet : MonoBehaviour
         rb.velocity = dirextion * bulletSpeed; 
         
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enermy"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

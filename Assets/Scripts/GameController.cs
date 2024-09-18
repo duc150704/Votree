@@ -7,6 +7,11 @@ public class GameController : MonoBehaviour
 {
     private Player player;
     private UIManager ui;
+    [SerializeField] private Enermy enermy;
+
+    [SerializeField] float SpawnTime;
+    private float spawnTime;
+
     private void Start()
     {
         player = FindObjectOfType<Player>();
@@ -18,11 +23,24 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         ShowData();
+        SpawnEnermy();
     }
 
     public void ShowData()
     {
         ui.SetData("Velocity : " );
+    }
+
+    private void SpawnEnermy()
+    {
+        Vector3 spawnPos = new Vector3(5, 5, 0);
+        spawnTime -= Time.deltaTime;
+        if (spawnTime < 0 && enermy)
+        {
+            Enermy newEnermy = Instantiate(enermy, player.transform.position + spawnPos, Quaternion.identity);
+            Destroy(newEnermy.gameObject,10f);
+            spawnTime = SpawnTime;  
+        }
     }
 
 }

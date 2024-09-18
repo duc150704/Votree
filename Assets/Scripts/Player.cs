@@ -133,4 +133,7 @@ public class Player : MonoBehaviour
         Bullet bulletClone = Instantiate(bullet,shootingPoint.position,Quaternion.Euler(0,0,z));
         Destroy(bulletClone.gameObject, 5);
     }
+
+
+   
 }
